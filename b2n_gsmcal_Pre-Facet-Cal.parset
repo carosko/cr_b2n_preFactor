@@ -319,6 +319,8 @@ b2n_cal_gsmcalibtarget.argument.gaincal.solint         	= 1
 b2n_cal_gsmcalibtarget.argument.gaincal.sourcedb        = {{ target_skymodel }} #### have to be a sourcedb type 
 b2n_cal_gsmcalibtarget.argument.gaincal.parmdb        	= b2n_cal_parmmapinst.output.mapfile 
 b2n_cal_gsmcalibtarget.argument.gaincal.predict.usebeammodel = True
+b2n_cal_gsmcalibtarget.argument.gaincal.predict.usechannelfreq= True
+b2n_cal_gsmcalibtarget.argument.gaincal.predict.beammode = array_factor
 
 
 b2n_apl_gsmcalibtarget.control.type                    	= dppp
