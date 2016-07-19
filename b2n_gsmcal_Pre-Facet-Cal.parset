@@ -285,7 +285,8 @@ dpppconcat.argument.flag.strategy          =  {{ flagging_strategy }}
 #gsmcalibtarget.argument.Step.solve.Solve.CellSize.Freq =  0  # default: solution-cell spans all frequency channels
 #gsmcalibtarget.argument.Step.solve.Solve.CellSize.Time =  1  # default: one solution per time-step
 
-# split in two step; cal and apply
+# split in two step; cal and apply 
+# Because :"Note that currently. the solution table is only written at the very end of DPPP, so that it is not possible to solve and apply the solutions in the same run of DPPP." (Cookbook v19 -p40)
 
 # Create a map to tell ndppp to add in each MSs' group a "instrument_directionindependent" table (and not the default "instrument")
 b2n_cal_parmmapinst.control.kind               =  plugin
@@ -307,13 +308,9 @@ b2n_cal_gsmcalibtarget.argument.msin.datacolumn        = DATA
 b2n_cal_gsmcalibtarget.argument.msin.baseline          = CS*&; RS*&; CS*&RS*
 b2n_cal_gsmcalibtarget.argument.msout.datacolumn       = CORRECTED_DATA
 b2n_cal_gsmcalibtarget.argument.msout.writefullresflag  = False
-b2n_cal_gsmcalibtarget.argument.steps                  	= [filter,predict,gaincal]	
+b2n_cal_gsmcalibtarget.argument.steps                  	= [filter,gaincal]	
 b2n_cal_gsmcalibtarget.filter.type		     	  		= filter
 b2n_cal_gsmcalibtarget.filter.blrange		  			= [300, 999999] #### [in m]
-b2n_cal_gsmcalibtarget.argument.predict.type	     	= predict
-b2n_cal_gsmcalibtarget.argument.predict.sources        	= []
-b2n_cal_gsmcalibtarget.argument.predict.usebeammodel   	= True
-b2n_cal_gsmcalibtarget.argument.predict.sourcedb        = {{ target_skymodel }} #### have to be a sourcedb type , but might not been required if given to gaincal?
 b2n_cal_gsmcalibtarget.argument.gaincal.type	     	= gaincal
 b2n_cal_gsmcalibtarget.argument.gaincal.maxiter        	= 500
 b2n_cal_gsmcalibtarget.argument.gaincal.caltype	  		= phaseonly #diagonal #### [here we want phase only]
@@ -321,6 +318,7 @@ b2n_cal_gsmcalibtarget.argument.gaincal.nchan	  		= 0
 b2n_cal_gsmcalibtarget.argument.gaincal.solint         	= 1
 b2n_cal_gsmcalibtarget.argument.gaincal.sourcedb        = {{ target_skymodel }} #### have to be a sourcedb type 
 b2n_cal_gsmcalibtarget.argument.gaincal.parmdb        	= b2n_cal_parmmapinst.output.mapfile 
+b2n_cal_gsmcalibtarget.argument.gaincal.predict.usebeammodel = True
 
 
 b2n_apl_gsmcalibtarget.control.type                    	= dppp
