@@ -319,7 +319,10 @@ expand_sourcedb_target.control.filename           =  expand_sourcedb_target.data
 
 
 
-########## Calibration itself split in two step; cal and apply
+########## Calibration itself 
+# split in two step; cal and apply 
+# Because :"Note that currently. the solution table is only written at the very end of DPPP, so that it is not possible to solve and apply the solutions in the same run of DPPP." (Cookbook v19 -p40)
+# and we solve for a sample of baseline when applying the solutions for all the baseline
 
 # Create a map to tell ndppp to add in each MSs' group a "instrument_directionindependent" table (and not the default "instrument")
 b2n_cal_parmmapinst.control.kind               =  plugin
@@ -341,7 +344,6 @@ b2n_cal_gsmcalibtarget.argument.msin.datacolumn        = DATA
 b2n_cal_gsmcalibtarget.argument.msin.baseline          = CS*&; RS*&; CS*&RS*
 b2n_cal_gsmcalibtarget.argument.msout.datacolumn       = CORRECTED_DATA
 b2n_cal_gsmcalibtarget.argument.msout.writefullresflag  = False
-#b2n_cal_gsmcalibtarget.argument.steps                  	= [filter,predict,gaincal]	
 b2n_cal_gsmcalibtarget.argument.steps                  	= [filter,gaincal]	
 b2n_cal_gsmcalibtarget.filter.type		     	  		= filter
 b2n_cal_gsmcalibtarget.filter.blrange		  			= [300, 999999] #### [in m]
