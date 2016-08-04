@@ -1,3 +1,4 @@
+# [uk: b2n_gsmcal_testtarget_Pre-Facet-Cal.parset]
 # Pre-Facet Calibration Pipeline
 #
 # Basic Pre-Facet Calibration Pipeline:
@@ -14,12 +15,10 @@
 #pipeline.steps=[createmap_cal, ndppp_prep_cal, calib_cal, h5_imp_map, h5imp_cal, fitclock, ampl, plots, phase]
 ### When calibrator processing is done, you can do the processing of the target data.
 ### Either by using the same pipeline and running this:
-pipeline.steps=[ createmap_cal, ndppp_prep_cal, calib_cal, h5_imp_map, h5imp_cal, fitclock, ampl, plots, phase, createmap_target, ndppp_prep_target, trans, parmmap, calibtarget, dpppaverage, ateamtarget, ateamcliptar, sortmap_tar, dpppconcat]#, gsmcalibtarget, gsmcal_parmmap, plot_gsm_phases, make_results_mapfile, move_results, createmap_plots, copy_plots]
-#pipeline.steps=[createmap_target, ndppp_prep_target, dpppaverage, sortmap_tar, dpppconcat,b2n_cal_gsmcalibtarget,b2n_apl_gsmcalibtarget]#, gsmcalibtarget, gsmcal_parmmap, plot_gsm_phases, make_results_mapfile, move_results, createmap_plots, copy_plots]
+#pipeline.steps=[ createmap_cal, ndppp_prep_cal, calib_cal, h5_imp_map, h5imp_cal, fitclock, ampl, plots, phase, createmap_target, ndppp_prep_target, trans, parmmap, calibtarget, dpppaverage, ateamtarget, ateamcliptar, sortmap_tar, dpppconcat, gsmcalibtarget, gsmcal_parmmap, plot_gsm_phases, make_results_mapfile, move_results, createmap_plots, copy_plots]
 #pipeline.steps=[createmap_target, ndppp_prep_target, dpppaverage, sortmap_tar, dpppconcat,b2n_cal_parmmapinst,b2n_cal_gsmcalibtarget,b2n_apl_gsmcalibtarget, plot_gsm_phases, make_results_mapfile, move_results, createmap_plots, copy_plots]
 ### Or by copying the *.npy files from the calibrator and running this:
-# pipeline.steps=[createmap_target, ndppp_prep_target, trans, parmmap, calibtarget, dpppaverage, ateamtarget, ateamcliptar, sortmap_tar, dpppconcat, gsmcalibtarget, gsmcal_parmmap, plot_gsm_phases, make_results_mapfile, move_results, createmap_plots, copy_plots]
-
+pipeline.steps=[createmap_target, ndppp_prep_target, trans, parmmap, calibtarget, dpppaverage, ateamtarget, ateamcliptar, sortmap_tar, dpppconcat,create_target_map,make_sourcedb_target,expand_sourcedb_target, b2n_cal_parmmapinst,b2n_cal_gsmcalibtarget,b2n_apl_gsmcalibtarget, plot_gsm_phases, make_results_mapfile, move_results, createmap_plots, copy_plots]
 
 # parameters you will need to adjust.
 ! avg_timestep         = 2  # mode f ie pr 10sec reso ; q a 2sec now # averaging step needed to average the data to 4 seconds time resolution
@@ -27,30 +26,29 @@ pipeline.steps=[ createmap_cal, ndppp_prep_cal, calib_cal, h5_imp_map, h5imp_cal
 ! cal_input_path       = /data/scratch/carosko/cycle0/factor/data/ori/calib_ext_tps/
 ! cal_input_pattern    = L*.MS
 ! calibrator_skymodel  = /home/carosko/bbs2ndpp/bbs2ndpp_prefactor/skymodels/3c295-twocomp.skymodel	###/cep3home/username/Pre-Facet-Cal/skymodels/PleaseProvideCalibrator.skymodel
-! target_input_path    = /data/scratch/carosko/cycle0/factor/data/ori/cast_40SB_ext_tps/
-! target_input_pattern = TL*.MS
-#### [skymodel have to be a sourcedb file]!!!!!!!!!!!!!!!!!!!!!!!
-#! target_skymodel      = /home/carosko/bbs2ndpp/bbs2ndpp_prefactor/skymodels/3c295-twocomp.skymodel	 #### !!!!!!!!!!!!!!!!!!!#/cep3home/username/Pre-Facet-Cal/skymodels/PleaseProvideTarget.skymodel
-! target_skymodel      = /home/carosko/bbs2ndpp/bbs2ndpp_prefactor/skymodels/3c295-twocomp.sourcedb
+! target_input_path    = /data/scratch/carosko/cycle0/factor/data/ori/target/
+! target_input_pattern = L*.MS
+! target_skymodel      = /home/carosko/bbs2ndpp/bbs2ndpp_prefactor/skymodels/4C33.33_10x10.MOSAIC.FITScat.bbs
 ! num_SBs_per_group    = 10 # make concatenated measurement-sets with that many subbands
-! results_directory    = /data/scratch/carosko/cycle0/factor/resultat/b2n_qn_kutt/ #/media/scratch/test/username/WhereYouWantYourProcessedData/
+! results_directory    = /data/scratch/carosko/cycle0/factor/resultat/b2n_gsmcal_withbeam #/data/scratch/carosko/cycle0/factor/resultat/b2n_gsmcal_targ/ #/media/scratch/test/username/WhereYouWantYourProcessedData/
 
 # pathes to the scripts etc.
 # #### ToDo: get the scripts onto CEP3 and adjust the pathes here!
-! calib_cal_parset     = /home/carosko/tier/source/prefactor/parsets/calibcal.parset
-! cal_transfer_parset  = /home/carosko/tier/source/prefactor/parsets/applyparmdb.parset
-! ATeam_predict_parset = /home/carosko/tier/source/prefactor/parsets/ateamclip.parset
-! gsm_cal_parset       = /home/carosko/tier/source/prefactor/parsets/gsmcal.parset
-! ATeam_skymodel       = /home/carosko/tier/source/prefactor/skymodels/Ateam_LBA_CC.skymodel
-! losoto_importer      = /home/carosko/tier/source/prefactor/bin/losotoImporter.py
-! fitclock_script      = /home/carosko/tier/source/prefactor/bin/fit_clocktec_initialguess_losoto.py
-! fitamps_script       = /home/carosko/tier/source/prefactor/bin/amplitudes_losoto_3.py
-! plotsols_script      = /home/carosko/tier/source/prefactor/bin/examine_npys.py
-! fit_XYoffset_script  = /home/carosko/tier/source/prefactor/bin/find_cal_global_phaseoffset_losoto.py
-! transfer_script      = /home/carosko/tier/source/prefactor/bin/transfer_amplitudes+clock+offset_toMS.py
-! ATeam_Clipper        = /home/carosko/tier/source/prefactor/bin/Ateamclipper.py
-! plotphases_script    = /home/carosko/tier/source/prefactor/bin/plot_solutions_all_stations.py
+! calib_cal_parset     = /home/carosko/bbs2ndpp/bbs2ndpp_prefactor/parsets/calibcal.parset
+! cal_transfer_parset  = /home/carosko/bbs2ndpp/bbs2ndpp_prefactor/parsets/applyparmdb.parset
+! ATeam_predict_parset = /home/carosko/bbs2ndpp/bbs2ndpp_prefactor/parsets/ateamclip.parset
+! gsm_cal_parset       = /home/carosko/bbs2ndpp/bbs2ndpp_prefactor/parsets/gsmcal.parset
+! ATeam_skymodel       = /home/carosko/bbs2ndpp/bbs2ndpp_prefactor/skymodels/Ateam_LBA_CC.skymodel
+! losoto_importer      = /home/carosko/bbs2ndpp/bbs2ndpp_prefactor/bin/losotoImporter.py
+! fitclock_script      = /home/carosko/bbs2ndpp/bbs2ndpp_prefactor/bin/fit_clocktec_initialguess_losoto.py
+! fitamps_script       = /home/carosko/bbs2ndpp/bbs2ndpp_prefactor/bin/amplitudes_losoto_3.py
+! plotsols_script      = /home/carosko/bbs2ndpp/bbs2ndpp_prefactor/bin/examine_npys.py
+! fit_XYoffset_script  = /home/carosko/bbs2ndpp/bbs2ndpp_prefactor/bin/find_cal_global_phaseoffset_losoto.py
+! transfer_script      = /home/carosko/bbs2ndpp/bbs2ndpp_prefactor/bin/transfer_amplitudes+clock+offset_toMS.py
+! ATeam_Clipper        = /home/carosko/bbs2ndpp/bbs2ndpp_prefactor/bin/Ateamclipper.py
+! plotphases_script    = /home/carosko/bbs2ndpp/bbs2ndpp_prefactor/bin/plot_solutions_all_stations.py
 ! flagging_strategy    = /opt/cep/lofar/lofar_versions/LOFAR-Release-2_12_0/lofar_build/install/gnu_opt/share/rfistrategies/HBAdefault
+! makesourcedb         = /opt/cep/lofar/lofar_versions/LOFAR-Release-2_15_2/lofar/bin/makesourcedb 	#: CEP3	#/homea/htb00/htb003/lofar_jureca_2-15/bin/makesourcedb
 
 # set this to True if you want the pipeline run to continue if single bands fail
 ! error_tolerance           =  False
@@ -285,8 +283,43 @@ dpppconcat.argument.flag.strategy          =  {{ flagging_strategy }}
 #gsmcalibtarget.argument.Step.solve.Solve.CellSize.Freq =  0  # default: solution-cell spans all frequency channels
 #gsmcalibtarget.argument.Step.solve.Solve.CellSize.Time =  1  # default: one solution per time-step
 
-# split in two step; cal and apply 
-# Because :"Note that currently. the solution table is only written at the very end of DPPP, so that it is not possible to solve and apply the solutions in the same run of DPPP." (Cookbook v19 -p40)
+
+####### Generation of the skymodel
+# create a mapfile with the target skymodel, length = 1
+create_target_map.control.kind              =  plugin
+create_target_map.control.type              =  addListMapfile
+create_target_map.control.hosts             =  ['localhost']
+create_target_map.control.files             =  [ {{ target_skymodel }} ]
+create_target_map.control.mapfile_dir       =  input.output.mapfile_dir
+create_target_map.control.filename          =  target_model_name.mapfile
+
+
+
+# make sourcedbs from the ateam-res skymodels, length = 1
+# outtype = blob for the same reasons as for sourcedb_high 
+make_sourcedb_target.control.kind                 =  recipe
+make_sourcedb_target.control.type                 =  executable_args
+make_sourcedb_target.control.executable           =  {{ makesourcedb }}
+make_sourcedb_target.control.error_tolerance      =  {{ error_tolerance }}
+make_sourcedb_target.control.args_format          =  lofar
+make_sourcedb_target.control.outputkey            =  out
+make_sourcedb_target.control.mapfile_in           =  create_target_map.output.mapfile
+make_sourcedb_target.control.inputkey             =  in
+make_sourcedb_target.argument.format              =  <
+make_sourcedb_target.argument.outtype             =  blob
+
+# expand the sourcedb mapfile so that there is one entry for every file, length = nfiles
+expand_sourcedb_target.control.kind               =  plugin
+expand_sourcedb_target.control.type               =  expandMapfile
+expand_sourcedb_target.control.mapfile_in         =  make_sourcedb_target.output.mapfile
+expand_sourcedb_target.control.mapfile_to_match   =  dpppconcat.output.mapfile
+expand_sourcedb_target.control.mapfile_dir        =  input.output.mapfile_dir
+expand_sourcedb_target.control.filename           =  expand_sourcedb_target.datamap
+##########
+
+
+
+########## Calibration itself split in two step; cal and apply
 
 # Create a map to tell ndppp to add in each MSs' group a "instrument_directionindependent" table (and not the default "instrument")
 b2n_cal_parmmapinst.control.kind               =  plugin
@@ -308,6 +341,7 @@ b2n_cal_gsmcalibtarget.argument.msin.datacolumn        = DATA
 b2n_cal_gsmcalibtarget.argument.msin.baseline          = CS*&; RS*&; CS*&RS*
 b2n_cal_gsmcalibtarget.argument.msout.datacolumn       = CORRECTED_DATA
 b2n_cal_gsmcalibtarget.argument.msout.writefullresflag  = False
+#b2n_cal_gsmcalibtarget.argument.steps                  	= [filter,predict,gaincal]	
 b2n_cal_gsmcalibtarget.argument.steps                  	= [filter,gaincal]	
 b2n_cal_gsmcalibtarget.filter.type		     	  		= filter
 b2n_cal_gsmcalibtarget.filter.blrange		  			= [300, 999999] #### [in m]
@@ -316,11 +350,15 @@ b2n_cal_gsmcalibtarget.argument.gaincal.maxiter        	= 500
 b2n_cal_gsmcalibtarget.argument.gaincal.caltype	  		= phaseonly #diagonal #### [here we want phase only]
 b2n_cal_gsmcalibtarget.argument.gaincal.nchan	  		= 0
 b2n_cal_gsmcalibtarget.argument.gaincal.solint         	= 1
-b2n_cal_gsmcalibtarget.argument.gaincal.sourcedb        = {{ target_skymodel }} #### have to be a sourcedb type 
+b2n_cal_gsmcalibtarget.argument.gaincal.sourcedb        = expand_sourcedb_target.output.mapfile 	#{{ target_skymodel }} #### have to be a sourcedb type 
 b2n_cal_gsmcalibtarget.argument.gaincal.parmdb        	= b2n_cal_parmmapinst.output.mapfile 
-b2n_cal_gsmcalibtarget.argument.gaincal.predict.usebeammodel = True
-b2n_cal_gsmcalibtarget.argument.gaincal.predict.usechannelfreq= True
-b2n_cal_gsmcalibtarget.argument.gaincal.predict.beammode = array_factor
+
+b2n_cal_gsmcalibtarget.argument.gaincal.usebeammodel = True
+b2n_cal_gsmcalibtarget.argument.gaincal.usechannelfreq= True
+b2n_cal_gsmcalibtarget.argument.gaincal.beammode = array_factor
+
+b2n_cal_gsmcalibtarget.argument.gaincal.propagatesolutions = False ####
+
 
 
 b2n_apl_gsmcalibtarget.control.type                    	= dppp
@@ -329,10 +367,10 @@ b2n_apl_gsmcalibtarget.control.environment             	= {OMP_NUM_THREADS: 4}
 b2n_apl_gsmcalibtarget.control.error_tolerance         	= {{ error_tolerance }}
 b2n_apl_gsmcalibtarget.control.inplace					= True
 b2n_apl_gsmcalibtarget.argument.msin                   	= dpppconcat.output.mapfile 
-b2n_apl_gsmcalibtarget.argument.msin.datacolumn        	= CORRECTED_DATA
+b2n_apl_gsmcalibtarget.argument.msin.datacolumn        	= DATA #CORRECTED_DATA
 b2n_apl_gsmcalibtarget.argument.msout.datacolumn       	= CORRECTED_DATA
 b2n_apl_gsmcalibtarget.argument.msout.writefullresflag 	= False
-b2n_apl_gsmcalibtarget.argument.steps                  	= [applycal, applybeam]	####
+b2n_apl_gsmcalibtarget.argument.steps                  	= [applycal] # beam already applied in calibtarget, applybeam]	####
 b2n_apl_gsmcalibtarget.argument.applycal.type	     	= applycal
 b2n_apl_gsmcalibtarget.argument.applycal.correction    	= gain
 b2n_apl_gsmcalibtarget.argument.applycal.parmdb        	= b2n_cal_parmmapinst.output.mapfile
