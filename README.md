@@ -10,10 +10,3 @@ Just a couple of steps for the test. Runs without crashing, but its correctness 
 The translation in the whole parset. SHOULD run without crashing (testing).
 
 
-Main changes:
-
--> skymodel for the target field: it has to be a sourcedb file to run NDPPP
-
--> adapting the maps
-
-
